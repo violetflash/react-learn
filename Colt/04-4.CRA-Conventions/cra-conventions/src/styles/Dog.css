@@ -1,0 +1,13 @@
+.Dog {
+    color: purple;
+    font-size: 32px;
+}
+
+.Dog-title {
+    background: teal;
+}
+
+.Dog-image {
+    border: 5px solid greenyellow;
+    width: 400px;
+}
