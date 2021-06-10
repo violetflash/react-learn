@@ -16,9 +16,11 @@ class Pokegame extends Component {
         ]
     }
 
+    getExpSum(arr) {
+        return arr.reduce((accum, curr) => accum + curr.base_experience, 0);
+    }
+
     render() {
-
-
         const hand1 = [];
         const hand2 = [ ...this.props.pokelist ];
         while (hand1.length < hand2.length ) {
@@ -26,15 +28,19 @@ class Pokegame extends Component {
             hand1.push(hand2.splice(randIdx, 1)[0]);
         }
 
+        const hand1Exp = this.getExpSum(hand1);
+        const hand2Exp = this.getExpSum(hand2);
+        const isWinner = hand1Exp > hand2Exp;
+
         return (
             <div>
                 <section className="Pokegame">
-                    <h1 className="Pokegame__title">Pokedex</h1>
+                    {/*<h1 className="Pokegame__title">Pokedex</h1>*/}
                     <article className="Pokegame__hand">
-                        <Pokedex pokemon={hand1}/>
+                        <Pokedex pokemon={hand1} sum={hand1Exp} isWinner={isWinner}/>
                     </article>
                     <article className="Pokegame__hand">
-                        <Pokedex pokemon={hand2}/>
+                        <Pokedex pokemon={hand2} sum={hand2Exp} isWinner={!isWinner}/>
                     </article>
                 </section>
             </div>

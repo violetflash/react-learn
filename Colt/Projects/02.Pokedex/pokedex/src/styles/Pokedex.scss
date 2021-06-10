@@ -1,4 +1,23 @@
 .Pokedex {
-  display: flex;
-  align-items: center;
+  text-align: center;
+  &__hand {
+    display: flex;
+    align-items: center;
+  }
+
+  & h2, p {
+    margin: 10px 0;
+  }
+
+  &__winner {
+    color: forestgreen;
+    font-size: 32px;
+    margin: 10px 0;
+  }
+
+  &__lose {
+    color: #ff003a;
+    font-size: 32px;
+  }
+
 }
