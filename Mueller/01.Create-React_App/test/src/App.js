@@ -1,15 +1,60 @@
 import React, {Component} from 'react';
 import './App.css';
 
-class App extends Component {
-    render() {
-        // return (
-        //     <div className="App">
-        //         <h1>Hi I Am a React App!</h1>
-        //     </div>
-        // );
+import Person from './Person/Person';
 
-        return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi I Am a React App!'))
+
+class App extends Component {
+    constructor(props) {
+        super();
+        this.state = {
+            persons: [
+                {name: 'Alex', age: 36},
+                {name: 'Steven', age: 32},
+                {name: 'Sonya', age: 26}
+            ]
+        }
+        // this.changeName = this.changeName.bind(this);
+    }
+
+    changeNameBtn(newName) {
+        this.setState({
+            persons: [
+                {name: newName, age: 36},
+                {name: 'Steven', age: 42},
+                {name: 'Sonya', age: 26}
+            ]
+        })
+    }
+
+    setValue(e) {
+        this.setState({
+            persons: [
+                {name: 'Alex', age: 36},
+                {name: 'Steven', age: 32},
+                {name: e.target.value, age: 26}
+            ]
+        })
+    }
+
+    render() {
+        const { persons } = this.state;
+        const btnStyle = {
+            backgroundColor: 'teal',
+            padding: '10px',
+            color: '#fff',
+            border: 0,
+            cursor: 'pointer',
+        }
+        return (
+            <div className="App">
+                <Person name={persons[0].name} age={persons[0].age}/>
+                <button style={btnStyle} onClick={this.changeNameBtn.bind(this, 'Mary Smith')}>Change name</button>
+                <button onClick={() => this.changeNameBtn('Rose Atkinson')}>Change name</button>
+                <Person name={persons[1].name} age={persons[1].age}/>
+                <Person name={persons[2].name} age={persons[2].age} setValue={this.setValue.bind(this)}/>
+            </div>
+        );
     }
 }
 
