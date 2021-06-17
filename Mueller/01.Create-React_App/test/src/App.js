@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+ import React, {Component} from 'react';
 import './App.css';
 
 import Person from './Person/Person';
@@ -17,7 +17,7 @@ class App extends Component {
         // this.changeName = this.changeName.bind(this);
     }
 
-    changeNameBtn(newName) {
+    changeNameHandler(newName) {
         this.setState({
             persons: [
                 {name: newName, age: 36},
@@ -49,8 +49,8 @@ class App extends Component {
         return (
             <div className="App">
                 <Person name={persons[0].name} age={persons[0].age}/>
-                <button style={btnStyle} onClick={this.changeNameBtn.bind(this, 'Mary Smith')}>Change name</button>
-                <button onClick={() => this.changeNameBtn('Rose Atkinson')}>Change name</button>
+                <button style={btnStyle} onClick={this.changeNameHandler.bind(this, 'Mary Smith')}>Change name</button>
+                <button onClick={() => this.changeNameHandler('Rose Atkinson')}>Change name</button>
                 <Person name={persons[1].name} age={persons[1].age}/>
                 <Person name={persons[2].name} age={persons[2].age} setValue={this.setValue.bind(this)}/>
             </div>
