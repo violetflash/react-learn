@@ -1,6 +1,6 @@
 import React from 'react';
 import Person from "./Components/Person/Person";
-import './App.css';
+import classes from './App.module.scss';
 
 class App extends React.Component {
     state = {
@@ -35,7 +35,6 @@ class App extends React.Component {
     }
 
     render() {
-
         let persons = null;
         if (this.state.showPersons) {
             persons = (
@@ -51,21 +50,26 @@ class App extends React.Component {
                     ))}
                 </React.Fragment>
             );
+
+            // style.backgroundColor = 'red';
+            // style[':hover'] = {
+            //     backgroundColor: 'salmon',
+            // }
         }
 
-        const classes = [];
+        const classList = [];
         if (this.state.persons.length <= 2) {
-            classes.push('red');
+            classList.push(classes.red);
         }
 
         if (this.state.persons.length <= 1) {
-            classes.push('bold');
+            classList.push(classes.bold);
         }
 
         return (
-            <div className="App">
-                <p className={classes.join(' ')}>Hello! I am a simple React App!</p>
-                <button onClick={this.toggleNames}>{this.state.showPersons ? 'Hide' : 'Show'}</button>
+            <div className={classes.App}>
+                <p className={classList.join(' ')}>Hello! I am a simple React App!</p>
+                <button className={classes.Button} onClick={this.toggleNames}>{this.state.showPersons ? 'Hide' : 'Show'}</button>
                 {persons}
             </div>
         );

@@ -16,6 +16,7 @@ const Person = props => {
                 {props.name}, {props.age}
             </span>
             <input type="text" onChange={props.change}/>
+            <button className="button">example</button>
         </>
 
     )
