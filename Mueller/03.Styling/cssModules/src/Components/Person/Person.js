@@ -1,23 +1,21 @@
 import React from 'react';
+import classes from './Person.module.scss';
 
 const Person = props => {
 
-    const style = {
-        display: 'block',
-        '@media (min-width: 500px)': {
-            backgroundColor: 'palegreen',
-            padding: '15px'
-        }
-    };
+    const rnd = Math.random();
+    if (rnd > 0.7) {
+        throw new Error('Something went wrong');
+    }
 
     return (
-        <>
-           <span onClick={props.click} style={style}>
+        <div className={classes.Person}>
+           <span  onClick={props.click} >
                 {props.name}, {props.age}
             </span>
             <input type="text" onChange={props.change}/>
-            <button className="button">example</button>
-        </>
+            <button className={classes.Button}>example</button>
+        </div>
 
     )
 

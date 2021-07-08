@@ -1,0 +1,13 @@
+.Button {
+  background-color: paleturquoise;
+}
+
+.Person {
+  margin-bottom: 20px;
+  background-color: #eee;
+
+  @media (max-width: 1000px) {
+    background-color: #ccc;
+    margin-bottom: 40px;
+  }
+}

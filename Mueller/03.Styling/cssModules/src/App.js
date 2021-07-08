@@ -14,7 +14,7 @@ class App extends React.Component {
     }
 
     changeNameHandler = (e, id) => {
-        const personIndex = this.state.persons.findIndex((elem) => elem.id === id);
+        const personIndex = this.state.persons.findIndex((elem) => elem.Itemid === id);
         const person = {...this.state.persons[personIndex]};
         person.name = e.target.value;
 
@@ -36,6 +36,9 @@ class App extends React.Component {
 
     render() {
         let persons = null;
+
+        const btnClass = [classes.Button];
+
         if (this.state.showPersons) {
             persons = (
                 <React.Fragment>
@@ -50,6 +53,9 @@ class App extends React.Component {
                     ))}
                 </React.Fragment>
             );
+
+            btnClass.push(classes.Red);
+            console.log(btnClass);
 
             // style.backgroundColor = 'red';
             // style[':hover'] = {
@@ -66,10 +72,11 @@ class App extends React.Component {
             classList.push(classes.bold);
         }
 
+
         return (
             <div className={classes.App}>
                 <p className={classList.join(' ')}>Hello! I am a simple React App!</p>
-                <button className={classes.Button} onClick={this.toggleNames}>{this.state.showPersons ? 'Hide' : 'Show'}</button>
+                <button className={btnClass.join(' ')} onClick={this.toggleNames}>{this.state.showPersons ? 'Hide' : 'Show'}</button>
                 {persons}
             </div>
         );
