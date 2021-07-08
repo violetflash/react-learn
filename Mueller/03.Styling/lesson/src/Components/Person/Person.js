@@ -1,10 +1,16 @@
 import React from 'react';
-
-const style = {
-    display: 'block'
-}
+import Radium from 'radium';
 
 const Person = props => {
+
+    const style = {
+        display: 'block',
+        '@media (min-width: 500px)': {
+            backgroundColor: 'palegreen',
+            padding: '15px'
+        }
+    };
+
     return (
         <>
            <span onClick={props.click} style={style}>
@@ -17,4 +23,4 @@ const Person = props => {
 
 };
 
-export default Person;
+export default Radium(Person);
