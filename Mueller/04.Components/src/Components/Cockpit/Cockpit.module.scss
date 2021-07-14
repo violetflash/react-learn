@@ -1,0 +1,28 @@
+.Cockpit {
+
+  &__title {
+    display: block;
+  }
+}
+
+.Button {
+  min-width: 70px;
+  padding: 10px;
+  background-color: green;
+  font-weight: 700;
+  color: white;
+  border: 1px solid blue;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: lightgreen;
+  }
+}
+
+.Button.Red {
+  background-color: red;
+  &:hover {
+    background-color: lightsalmon;
+  }
+}
