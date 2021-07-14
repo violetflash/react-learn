@@ -4,6 +4,11 @@ import Persons from "../Components/Persons/Persons";
 import classes from './App.module.scss';
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log('[App.js] constructor');
+    }
+
     state = {
         persons: [
             { id: 'shsh', name: 'Alex', age: 36 },
