@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from "./Cockpit.module.scss";
 
 const Cockpit = ({ persons, toggleNames, showPersons, title }) => {
+
+    //Combines componentDidMount and componentDidUpdate
+    useEffect(() => {
+        console.log('[Cockpit.js] useEffect');
+        //fake Http request
+        setTimeout(() => {
+            alert('saved data to cloud...');
+        }, 1000)
+        //this will work right when useEffect runs for the last time
+        return () => {
+            console.log('[Cockpit.js] cleanup work in useEffect');
+        };
+    }, []); //[] - empty dependency array - this will work just for the first time when component will be mounted.
+
+    useEffect(() =>{
+        console.log('[Cockpit.js] 2nd useEffect');
+
+        return () => {
+            console.log('[Cockpit.js] cleanup work in 2nd useEffect');
+        };
+    }); //there's no dependency so return functionality would be done EVERY time the component rendered
 
     const btnClass = [classes.Button];
 

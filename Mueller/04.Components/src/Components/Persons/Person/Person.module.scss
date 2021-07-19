@@ -5,6 +5,7 @@
 .Person {
   margin-bottom: 20px;
   background-color: #eee;
+  padding: 10px 0;
 
   @media (max-width: 1000px) {
     background-color: #ccc;

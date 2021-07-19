@@ -10,15 +10,20 @@ class Persons extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         //compare current props with next props and return true or false to render or not
         console.log('[Persons.js] shouldComponentUpdate');
-        return true;
+        return nextProps.persons !== this.props.persons;
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         console.log('[Persons.js] getSnapshotBeforeUpdate');
+        return null;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('[Persons.js] componentDidUpdate');
+    }
+
+    componentWillUnmount() {
+        console.log('[Persons.js] componentWillUnmount');
     }
 
     render() {
