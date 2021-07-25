@@ -1,4 +1,4 @@
-import './App.css';
+import s from './Form.module.scss';
 import {Component} from "react";
 
 class Form extends Component {
@@ -7,12 +7,16 @@ class Form extends Component {
 
         this.state = {
             firstName: '',
+            isNameValid: false,
             email: ''
         }
 
         this.changeHandler = this.changeHandler.bind(this);
         this.validateName = this.validateName.bind(this);
         this.nameHandler = this.nameHandler.bind(this);
+        this.nameBlurHandler = this.nameBlurHandler.bind(this);
+        this.submitForm = this.submitForm.bind(this);
+        this.checkNameValid = this.checkNameValid.bind(this);
     }
 
     changeHandler(e) {
@@ -32,37 +36,59 @@ class Form extends Component {
         this.validateName(e);
     }
 
-    nameBlurHandle(e) {
+    nameBlurHandler(e) {
         e.target.value = e.target.value.trim();
+        this.setState({isNameValid: this.state.firstName.length > 2})
+
+    }
+
+    submitForm(e) {
+        e.preventDefault();
+        if (!this.state.isNameValid) {
+            console.log('invalid name input value');
+            return;
+        } else {
+            console.log('WAS SUCCESSFULLY SEND');
+        }
+    }
+
+    checkNameValid() {
+        let className = [s.Form__input];
+
+        if (this.state.firstName && !this.state.isNameValid) {
+            className.push(s.invalid);
+        } else {
+            className = [s.Form__input];
+        }
+
+        return className;
     }
 
     render() {
 
-        const style = {
-            display: 'block',
-            margin: '10px'
-        }
+
         return (
-            <div>
-                <input style={style}
+            <form className={s.Form}>
+                <input className={this.checkNameValid().join(' ')}
                        type="text"
                        name='firstName'
                        placeholder='firstName'
                        value={this.state.firstName}
                        onChange={this.nameHandler}
-                       onBlur={this.nameBlurHandle}
+                       onBlur={this.nameBlurHandler}
                        autoComplete='off'
                 />
-                <input style={style}
+                <input className={s.Form__input}
                        type="text"
                        name='email'
                        placeholder='email'
                        value={this.state.email}
                        onChange={this.changeHandler}
                        autoComplete='off'
-
                 />
-            </div>
+
+                <button onClick={this.submitForm}>Submit</button>
+            </form>
         );
     }
 }
