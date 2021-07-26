@@ -1,0 +1,27 @@
+.Form {
+  margin-top: 50px;
+
+  &__label {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  &__labelCheck {
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    display: block;
+  }
+
+  &__span {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  &__errorMessage {
+    margin-top: 10px;
+    color: red;
+  }
+}
