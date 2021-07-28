@@ -1,17 +1,18 @@
 import s from './Form.module.scss';
-import {Component} from "react";
+import { Component } from "react";
 
 class Form extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             firstName: '',
             isNameValid: false,
             email: '',
             select: '',
-            subscription: false
-        }
+            subscription: false,
+            gender: ''
+        };
 
         this.changeHandler = this.changeHandler.bind(this);
         this.validateName = this.validateName.bind(this);
@@ -23,11 +24,11 @@ class Form extends Component {
     }
 
     checkboxHandler(e) {
-        this.setState({[e.target.name]: e.target.checked});
+        this.setState({ [e.target.name]: e.target.checked });
     }
 
     changeHandler(e) {
-        this.setState({[e.target.name]: e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     validateName(e) {
@@ -35,7 +36,7 @@ class Form extends Component {
             .replace(/[^A-Za-zА-Яа-я ]/gi, '')
             .replace(/\s\s/, ' ')
             .replace(/(?<= )\w|^\w/gi, match => match.toUpperCase());
-        this.setState({firstName: e.target.value})
+        this.setState({ firstName: e.target.value });
     }
 
     nameHandler(e) {
@@ -45,7 +46,7 @@ class Form extends Component {
 
     nameBlurHandler(e) {
         e.target.value = e.target.value.trim();
-        this.setState({isNameValid: this.state.firstName.length > 2})
+        this.setState({ isNameValid: this.state.firstName.length > 2 });
 
     }
 
@@ -73,36 +74,64 @@ class Form extends Component {
 
     render() {
 
-
+        const { gender, email, firstName, select, subscription } = this.state;
         return (
             <form className={s.Form}>
                 <input className={this.checkNameValid().join(' ')}
                        type="text"
-                       name='firstName'
-                       placeholder='firstName'
-                       value={this.state.firstName}
+                       name="firstName"
+                       placeholder="firstName"
+                       value={firstName}
                        onChange={this.nameHandler}
                        onBlur={this.nameBlurHandler}
-                       autoComplete='off'
+                       autoComplete="off"
                 />
                 <input className={s.Form__input}
                        type="text"
-                       name='email'
-                       placeholder='email'
-                       value={this.state.email}
+                       name="email"
+                       placeholder="email"
+                       value={email}
                        onChange={this.changeHandler}
-                       autoComplete='off'
+                       autoComplete="off"
                 />
-                <select name="select" onChange={this.changeHandler} >
-                    <option disabled />
+                <select name="select" onChange={this.changeHandler} value={select}>
+                    <option value="" disabled/>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </select>
                 <label>
                     Subscription
-                    <input type="checkbox" name='subscription' checked={this.state.subscription} onChange={this.checkboxHandler}/>
+                    <input
+                        type="checkbox"
+                        name="subscription"
+                        onChange={this.checkboxHandler}
+                        checked={subscription}
+                    />
                 </label>
+
+                <div className={s.Form__radios}>
+                    <label>
+                        Male
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="male"
+                            onChange={this.changeHandler}
+                            checked={gender === 'male'}
+                        />
+                    </label>
+                    <label>
+                        Female
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="female"
+                            onChange={this.changeHandler}
+                            checked={gender === 'female'}
+                        />
+                    </label>
+                </div>
 
                 <button onClick={this.submitForm}>Submit</button>
             </form>

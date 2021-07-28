@@ -87,7 +87,7 @@ class App extends React.Component {
                 <button onClick={cockpitBtnHandler}>Remove Cockpit</button>
                 {this.state.cockpitState && <Cockpit
                     title={this.props.title}
-                    persons={this.state.persons}
+                    personsLength={this.state.persons.length}
                     toggleNames={this.toggleNames}
                     showPersons={this.state.showPersons}
                 />}

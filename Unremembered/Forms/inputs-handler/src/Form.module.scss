@@ -5,6 +5,10 @@
   flex-direction: column;
   margin-top: 40px;
 
+  input {
+    margin: 20px 10px;
+  }
+
   &__input {
     display: block;
     margin-bottom: 10px;
@@ -12,6 +16,13 @@
     &:last-child {
       margin: 0;
     }
+  }
+
+  &__radios {
+    display: flex;
+    align-items: center;
+
+
   }
 }
 
