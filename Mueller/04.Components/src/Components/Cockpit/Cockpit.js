@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import classes from "./Cockpit.module.scss";
 
-const Cockpit = ({ persons, toggleNames, showPersons, title }) => {
+const Cockpit = ({ personsLength, toggleNames, showPersons, title }) => {
 
     //Combines componentDidMount and componentDidUpdate
     useEffect(() => {
@@ -32,11 +32,11 @@ const Cockpit = ({ persons, toggleNames, showPersons, title }) => {
 
 
     const classList = [];
-    if (persons.length <= 2) {
+    if (personsLength <= 2) {
         classList.push(classes.red);
     }
 
-    if (persons.length <= 1) {
+    if (personsLength <= 1) {
         classList.push(classes.bold);
     }
 
@@ -49,4 +49,5 @@ const Cockpit = ({ persons, toggleNames, showPersons, title }) => {
 
 };
 
-export default Cockpit;
+export default React.memo(Cockpit);
+//react will store a snapshot of this component and only if its input changes, it will re-render it
