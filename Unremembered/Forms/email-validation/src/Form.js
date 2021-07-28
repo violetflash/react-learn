@@ -48,8 +48,11 @@ class Form extends Component {
             return;
         }
 
-        this.setState({error: ''});
         console.log('SUCCESSFULLY SEND');
+        this.setState({error: ''});
+        this.setState({email: ''});
+        this.setState({isEmailValid: false});
+        this.setState({termsChecked: false});
     }
 
     render() {

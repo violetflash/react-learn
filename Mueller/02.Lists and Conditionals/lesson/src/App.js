@@ -1,21 +1,5 @@
 import React from 'react';
 import Person from "./Components/Person/Person";
-import './App.css';
-import styled from 'styled-components';
-
-const Button = styled.button`
-  min-width: 70px;
-  padding: 10px;
-  background-color: ${props => props.alt ? 'red' : 'green'};
-  font-weight: 700;
-  color: white;
-  border: 1px solid blue;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  &:hover {
-    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-  }
-`;
 
 class App extends React.Component {
     state = {
@@ -67,21 +51,12 @@ class App extends React.Component {
                 </React.Fragment>
             );
         }
-
-        const classes = [];
-        if (this.state.persons.length <= 2) {
-            classes.push('red');
-        }
-
-        if (this.state.persons.length <= 1) {
-            classes.push('bold');
-        }
-
         return (
-            <div className="App">
-                <p className={classes.join(' ')}>Hello! I am a simple React App!</p>
-                <Button alt={this.state.showPersons} onClick={this.toggleNames}>{this.state.showPersons ? 'Hide' : 'Show'}</Button>
+            <div>
+                <input type="text" onChange={this.changeNameHandler}/>
+                <button onClick={this.toggleNames}>Show/hide</button>
                 {persons}
+
             </div>
         );
     }

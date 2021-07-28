@@ -51,12 +51,13 @@ class Form extends Component {
 
     submitForm(e) {
         e.preventDefault();
+
         if (!this.state.isNameValid) {
             console.log('invalid name input value');
             return;
-        } else {
-            console.log('WAS SUCCESSFULLY SEND');
         }
+
+        console.log('WAS SUCCESSFULLY SEND');
     }
 
     checkNameValid() {
