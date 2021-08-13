@@ -33,9 +33,12 @@ const HookCounter = ({ counter }) => {
         console.log('HookCounter mounted');
 
         return () => {
-            console.log('HookCounter UNmounted');
+            console.log('HookCounter UNmounted'); // Очистка предыдущего эффекта перед запуском следующего эффекта
         }
     }, [counter]);
+    // если хотя бы одно значение массива изменится - useEffect сработает.
+    // пустой массив - Чтобы он сработал всего 1 раз (как componentDidMount)
+    // Если массив не передать - будет срабатывать при маунте и при каждом обновлении компонента.
 
     return (
         <span style={{ display: 'block' }}>
