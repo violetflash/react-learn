@@ -47,6 +47,20 @@ const HookCounter = ({ counter }) => {
     )
 }
 
+const Notification = () => {
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const timeoutID = setTimeout(() => {
+            setIsVisible(false);
+        }, 3000)
+        return () => {
+            clearTimeout(timeoutID);
+        }
+    }, []);
+    return isVisible ? <div><p>Hello</p></div> : null;
+};
+
 const App = () => {
     const [counter, setCounter] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
@@ -67,11 +81,13 @@ const App = () => {
         </div> :
         null;
 
+
     const toggleTitle = isVisible ? 'Hide' : 'Show'
     return (
         <>
             <button onClick={toggleCounters}>{toggleTitle}</button>
             {counters}
+            <Notification />
         </>
     )
 };
