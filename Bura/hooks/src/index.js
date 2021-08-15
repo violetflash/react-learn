@@ -61,9 +61,33 @@ const Notification = () => {
     return isVisible ? <div><p>Hello</p></div> : null;
 };
 
+const PlanetInfo = ({ id }) => {
+    const [name, setName] = useState(null);
+
+    useEffect(() => {
+        fetch(`https://swapi.dev/api/planets/${id}`)
+            .then((res) => res.json())
+            .then(data => {
+                setName(data.name);
+                const regex = /(?<=\/)\d+(?=\/$)/gi;
+                console.log(data.url.match(regex)[0]);
+            })
+    }, [id]);
+
+
+
+
+    return (
+        <div>
+           {name}
+        </div>
+    );
+}
+
 const App = () => {
-    const [counter, setCounter] = useState(0);
+    const [counter, setCounter] = useState(1);
     const [isVisible, setIsVisible] = useState(true);
+
 
     const incrementCounter = () => {
         setCounter(counter => counter + 1);
@@ -81,13 +105,17 @@ const App = () => {
         </div> :
         null;
 
+    const toggleTitle = isVisible ? 'Hide' : 'Show';
 
-    const toggleTitle = isVisible ? 'Hide' : 'Show'
+
+
+
     return (
         <>
             <button onClick={toggleCounters}>{toggleTitle}</button>
             {counters}
             <Notification />
+            <PlanetInfo id={counter}/>
         </>
     )
 };
