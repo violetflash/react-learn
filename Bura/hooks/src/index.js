@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 class ClassCounter extends Component {
@@ -61,26 +61,39 @@ const Notification = () => {
     return isVisible ? <div><p>Hello</p></div> : null;
 };
 
-const PlanetInfo = ({ id }) => {
-    const [name, setName] = useState(null);
+//выделение логики асинхронной операции в отдельную функцию
+const getPlanet = async id => {
+    const res = await fetch(`https://swapi.dev/api/planets/${id}`);
+    return await res.json();
+};
+
+//Хук который получит данные из любой асинхронной операции
+const useRequest = request => {
+    const [dataState, setDataState] = useState(null);
 
     useEffect(() => {
-        fetch(`https://swapi.dev/api/planets/${id}`)
-            .then((res) => res.json())
-            .then(data => {
-                setName(data.name);
-                const regex = /(?<=\/)\d+(?=\/$)/gi;
-                console.log(data.url.match(regex)[0]);
-            })
-    }, [id]);
+        let cancelled = false; //будем игнорировать результат асинх. задачи, если эффект был очищен
+        request()
+            .then(data => !cancelled && setDataState(data));
+        return () => cancelled = true;
+    }, [request]);
 
+    return dataState;
+};
 
+//Создание своего хука
+const usePlanetInfo = id => {
+    const request = () => getPlanet(id);
+    // console.log(request);
+    return useRequest(request);
+}
+
+const PlanetInfo = ({ id }) => {
+    const data = usePlanetInfo(id);
 
 
     return (
-        <div>
-           {name}
-        </div>
+        <div>{id} - {data && data.name}</div>
     );
 }
 
