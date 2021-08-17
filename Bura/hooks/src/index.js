@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 class ClassCounter extends Component {
@@ -69,28 +69,55 @@ const getPlanet = async id => {
 
 //Хук который получит данные из любой асинхронной операции
 const useRequest = request => {
-    const [dataState, setDataState] = useState(null);
+    //useMemo кэширует результат
+    const initialState = useMemo(() => ({
+        data: null,
+        loading: true,
+        error: false
+    }), []);
+    const [dataState, setDataState] = useState(initialState);
 
     useEffect(() => {
+        setDataState(initialState);
         let cancelled = false; //будем игнорировать результат асинх. задачи, если эффект был очищен
         request()
-            .then(data => !cancelled && setDataState(data));
+            .then(data => !cancelled && setDataState({
+                loading: false,
+                data,
+                error: false
+            }))
+            .catch((err) => {
+                !cancelled && setDataState({
+                    data: null,
+                    loading: false,
+                    error: true
+                });
+                console.error(err);
+            })
         return () => cancelled = true;
-    }, [request]);
+    }, [request, initialState]);
 
     return dataState;
 };
 
 //Создание своего хука
 const usePlanetInfo = id => {
-    const request = () => getPlanet(id);
+    //useCallback - кэширует (сохраняет) функцию между вызовами, если данные в массиве зависимостей не изменились
+    const request = useCallback(() => getPlanet(id), [id]);
     // console.log(request);
     return useRequest(request);
 }
 
 const PlanetInfo = ({ id }) => {
-    const data = usePlanetInfo(id);
+    const { data, loading, error } = usePlanetInfo(id);
 
+    if (error) {
+        return <div>Something is wrong!</div>;
+    }
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     return (
         <div>{id} - {data && data.name}</div>
