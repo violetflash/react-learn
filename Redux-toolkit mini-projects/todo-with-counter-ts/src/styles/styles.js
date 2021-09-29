@@ -2,8 +2,20 @@ import styled from 'styled-components';
 
 export const ButtonContainer = styled.button`
   display: block;
-  margin: ${props => props.addStyle === "mlAuto" ? "0 0 0 auto" : "0 20px"};
-  padding: 10px 15px;
+  margin: ${props => {
+    if (props.addStyle && props.addStyle.includes('mlAuto')) {
+      return "0 0 0 auto"
+    }
+    
+    return "0 20px";
+  }};
+  padding: ${props => {
+    if (props.addStyle && props.addStyle.includes('small')) {
+      return "2px 5px"
+    }
+
+    return "10px 15px";
+  }};
   border: none;
   border-radius: 4px;
   background-color: skyblue;
@@ -22,7 +34,9 @@ export const ButtonContainer = styled.button`
 `;
 
 export const ControlsContainer = styled.div`
-  
+  padding: 10px;
+  border-radius: 4px;
+  border: 2px solid #000;
 `;
 
 export const CounterContainer = styled.span`
@@ -62,6 +76,7 @@ export const TodoItemContainer = styled.li`
   padding: 10px 15px 10px 25px;
   width: 100%;
   font-size: 18px;
+  border-bottom: 1px solid #ccc;
 
 
   &::before {
@@ -71,5 +86,10 @@ export const TodoItemContainer = styled.li`
     font-size: 16px;
     font-weight: 700;
   }
- 
+`;
+
+export const TodoItemText = styled.span`
+  margin-left: 15px;
+  text-decoration: ${props => props.completed ? "line-through" : "none"};
+  cursor: pointer;
 `;

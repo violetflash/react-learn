@@ -1,16 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  inputValue: ""
+}
+
 const todoInputSlice = createSlice({
   name: "todoInput",
-  initialState: { value: "" },
+  initialState,
   reducers: {
     handleInput(state, action) {
-      state.value = action.payload.value;
+      state.inputValue = action.payload.inputValue;
     },
 
-    resetTextInputValue(state) {
-      state.value = "";
-    }
+    resetTextInputValue: () => initialState
   }
 })
 

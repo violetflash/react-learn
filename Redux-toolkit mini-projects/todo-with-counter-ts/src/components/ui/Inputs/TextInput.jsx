@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { InputFieldLabel,TextInputContainer } from "../../../styles/styles";
 
-export const TextInput = ({ placeholder, inputHandler, value, submitTodo }) => {
-  const [text, setText] = useState(value);
+export const TextInput = ({ placeholder, inputHandler, inputValue, onEnterPress }) => {
 
   const handleInput = (e) => {
     inputHandler(e);
-    setText(value);
   }
 
   const keyPressHandle = (e) => {
     if (e.key !== 'Enter') return;
 
-    submitTodo(e);
-    setText("");
+    onEnterPress(e);
   }
   return (
     <InputFieldLabel>
@@ -21,7 +18,7 @@ export const TextInput = ({ placeholder, inputHandler, value, submitTodo }) => {
         type="text"
         placeholder={placeholder}
         onChange={handleInput}
-        value={text}
+        value={inputValue}
         onKeyPress={keyPressHandle}
       />
     </InputFieldLabel>
