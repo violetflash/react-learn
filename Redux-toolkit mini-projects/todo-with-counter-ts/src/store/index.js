@@ -8,5 +8,6 @@ export default configureStore({
     counter: counterReducer,
     todo: todoReducer,
     todoInput: todoInputReducer
-  }
+  },
+  // middleware:
 })

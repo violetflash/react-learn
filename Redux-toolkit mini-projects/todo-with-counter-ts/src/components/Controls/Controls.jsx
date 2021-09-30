@@ -22,7 +22,7 @@ export const Controls = () => {
     if (!inputValue) return;
     dispatch(addTodo({
       id: nanoid(),
-      text: inputValue,
+      title: inputValue,
       completed: false
     }));
     dispatch(resetTextInputValue());
