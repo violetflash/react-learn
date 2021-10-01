@@ -25,23 +25,42 @@ export default class SidebarMenu extends React.Component {
     })
   }
 
+
+
   getNamesArr() {
-    let arr = {}
+    const arr = {}
     const self = this
-    const { files } = sidebar;
+    const removeExtension = (str) => {
+      return str.replace(/\..+/, '');
+    };
 
-    files.map(file => {
-      let folder = file.folder ? file.folder : section.folder
-      let filename = typeof file === 'string' ? file : file.indexFile
-      arr[folder + '/' + filename] = startCase(filename.slice(0, -3))
+    const setName = () => {
+      const fileName = typeof file === 'string' ? file : file.indexFile
+      arr[folder + '/' + fileName] = startCase(removeExtension(fileName))
+    };
 
-      if (file.files && file.files.length > 0) {
-        file.files.map(file2 => {
-          let folder = file.folder ? file.folder : section.folder
-          let filename = file2
-          arr[folder + '/' + filename] = startCase(filename.slice(0, -3))
-        })
+    const searchFiles = (folder) => {
+      if (folder?.files?.length > 0) {
+        searchFiles(folder.files);
       }
+
+      setName()
+    }
+
+    sidebar.forEach(section => {
+      section.files.forEach(file => {
+        let folder = file.folder ? file.folder : section.folder
+        let fileName = typeof file === 'string' ? file : file.indexFile
+        arr[folder + '/' + fileName] = startCase(removeExtension(fileName))
+
+        if (file.files && file.files.length > 0) {
+          file.files.forEach(subFile => {
+            let fileName = subFile
+            let folder = file.folder ? file.folder : section.folder
+            arr[folder + '/' + fileName] = startCase(removeExtension(fileName))
+          })
+        }
+      })
     })
     self.setState({
       names: arr,
@@ -105,14 +124,13 @@ export default class SidebarMenu extends React.Component {
                     {sectionTitle}
                   </SectionLink>
                   <Collapse data-open={isSectionActive ? 'true' : 'false'}>
-                    {section.files &&
-                    section.files.map((file, fileIndex) => {
+                    {section.files && section.files.map((file, fileIndex) => {
                       const subgroup = file.files ? file.files : null
                       let compare = file.folder && file.indexFile ? file.folder + '/' + file.indexFile : section.folder + '/' + file
                       const isFileActive = currentFile === compare
-                      let FileOrSubsectionTitle = file.name
-                        ? file.name
-                        : this.getName(section.labels, section.files, file.folder ? file.folder : section.folder, file.indexFile ? file.indexFile : file)
+                      let FileOrSubsectionTitle = file.name ?
+                        file.name :
+                        this.getName(section.labels, section.files, file.folder ? file.folder : section.folder, file.indexFile ? file.indexFile : file)
                       return (
                         <Fragment key={`file-${fileIndex}`}>
                           {subgroup && (
