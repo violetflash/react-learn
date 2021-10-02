@@ -28,40 +28,36 @@ export default class SidebarMenu extends React.Component {
 
 
   getNamesArr() {
-    const arr = {}
     const self = this
+    const arr = {};
+
     const removeExtension = (str) => {
       return str.replace(/\..+/, '');
     };
 
-    const setName = () => {
-      const fileName = typeof file === 'string' ? file : file.indexFile
-      arr[folder + '/' + fileName] = startCase(removeExtension(fileName))
-    };
-
-    const searchFiles = (folder) => {
-      if (folder?.files?.length > 0) {
-        searchFiles(folder.files);
-      }
-
-      setName()
+    const checkFileNameExist = file => {
+      return typeof file === 'string' || file.indexFile;
     }
 
-    sidebar.forEach(section => {
-      section.files.forEach(file => {
-        let folder = file.folder ? file.folder : section.folder
-        let fileName = typeof file === 'string' ? file : file.indexFile
-        arr[folder + '/' + fileName] = startCase(removeExtension(fileName))
+    const searchFiles = (rootFolder) => {
+      let folder = '';
+      rootFolder.forEach(file => {
+        //save folder Name
+        if (file.folder) {
+          folder = file.folder;
+        }
 
-        if (file.files && file.files.length > 0) {
-          file.files.forEach(subFile => {
-            let fileName = subFile
-            let folder = file.folder ? file.folder : section.folder
-            arr[folder + '/' + fileName] = startCase(removeExtension(fileName))
-          })
+        const fileName = typeof file === 'string' ? file : file.indexFile;
+
+        if (checkFileNameExist(file)) {
+          arr[folder + '/' + fileName] = removeExtension(fileName);
+        }
+
+        if (file?.files?.length) {
+          searchFiles(file.files);
         }
       })
-    })
+    }
     self.setState({
       names: arr,
       loading: false
