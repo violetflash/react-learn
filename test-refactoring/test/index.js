@@ -52,3 +52,5 @@ const searchFiles = (rootFolder) => {
 searchFiles(data);
 
 console.log(arr);
+
+console.log(data.includes('rootfile1.hr'))
