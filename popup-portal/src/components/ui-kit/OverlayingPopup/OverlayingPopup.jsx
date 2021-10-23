@@ -1,4 +1,4 @@
-import { Portal } from '../Potral/Portal';
+import { Portal } from '../Portal/Portal';
 import { Container, Overlay } from "./styles";
 
 
