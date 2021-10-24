@@ -2,10 +2,16 @@ import styled from 'styled-components/macro';
 import { css } from 'styled-components';
 
 export const PopupContainerStyle = css`
-  background-color: #f8f8f8;
+  padding: 15px;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: #f8f8f8;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+`;
+
+export const PopupBody = styled.div`
+  
 `;
 
 export const CloseButton = styled.button`
