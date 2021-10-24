@@ -15,7 +15,7 @@ const DialogControls = styled.div`
   ;
 `;
 
-const Dialog = ({ isOpened, onClose, title, secondaryButtonText, primaryButtonText = null, onConfirmFunc = Function.prototype}) => {
+export const Dialog = ({ isOpened, onClose, title, secondaryButtonText, primaryButtonText = null, onConfirmFunc = Function.prototype}) => {
 
   const confirmHandler = () => {
     onConfirmFunc();

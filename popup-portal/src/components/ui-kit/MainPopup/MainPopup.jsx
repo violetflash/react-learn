@@ -11,11 +11,11 @@ const PopupContainer = styled.div`
 
 export const MainPopup = ({
   isOpened,
-  onPrevArrowClick,
   title,
-  onClose,
-  className,
   children,
+  className,
+  onClose = Function.prototype,
+  onPrevArrowClick = Function.prototype,
 }) => {
   return (
     <OverlayingPopup isOpened={isOpened} onClose={onClose}>
