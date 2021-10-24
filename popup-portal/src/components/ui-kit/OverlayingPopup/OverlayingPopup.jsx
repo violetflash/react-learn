@@ -1,5 +1,5 @@
 import { Portal } from '../Portal/Portal';
-import { Container, Overlay } from "./styles";
+import { OverlayingContainer, Overlay } from "./styles";
 
 
 export const OverlayingPopup = ({ children, onClose, isOpened }) => {
@@ -7,10 +7,10 @@ export const OverlayingPopup = ({ children, onClose, isOpened }) => {
 
   return (
     <Portal>
-      <Container role="dialog">
+      <OverlayingContainer role="dialog">
         <Overlay role="button" tabIndex={0} onClick={onClose}/>
         {children}
-      </Container>
+      </OverlayingContainer>
     </Portal>
   );
 };
