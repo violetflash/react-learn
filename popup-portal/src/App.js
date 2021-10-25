@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { openMainModal, closeMainModal, openDialog, closeDialog } from './redux';
 import { MainPopup, Dialog } from "./components/ui-kit";
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -13,16 +14,17 @@ function App() {
   return (
     <div className="App">
       <button onClick={openModal}>Открыть попап</button>
-      <button onClick={openDialogHandler}>Открыть диалог</button>
+
 
       <MainPopup title="Главный попап"  onClose={closeModal} isOpened={mainModalOpened}>
         Контент
+        <button onClick={openDialogHandler}>Открыть диалог</button>
       </MainPopup>
 
       <Dialog
         isOpened={dialogOpened}
         onClose={closeDialogHandler}
-        title="Согласны на что-то?"
+        title="Шаблоны кнопок"
         onConfirmFunc={() => console.log('Вы согласились!')}
         primaryButtonText="Согласен"
         secondaryButtonText="Не согласен"

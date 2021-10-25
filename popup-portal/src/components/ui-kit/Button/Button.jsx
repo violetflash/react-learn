@@ -1,14 +1,19 @@
 import React from 'react';
-import {ButtonContainer} from "./style";
+import { StyledButton, CircleButton } from "./style";
 
-const Button = ({ text, confirm = null, danger = null, onClick = Function.prototype }) => {
+const Button = (props) => {
+  if (props.circle) {
+    return (
+      <CircleButton {...props} >
+        {props.text}
+      </CircleButton>
+    )
+  }
+
   return (
-    <ButtonContainer onClick={onClick}
-    danger={danger}
-    confirm={confirm}
-    >
-      {text}
-    </ButtonContainer>
+    <StyledButton {...props} >
+      {props.text}
+    </StyledButton>
   );
 };
 

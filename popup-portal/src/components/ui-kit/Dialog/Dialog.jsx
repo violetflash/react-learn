@@ -22,7 +22,7 @@ export const Dialog = ({ isOpened, onClose, title, secondaryButtonText, primaryB
     onClose();
   };
 
-  const primaryButton = primaryButtonText ? <Button text={primaryButtonText} confirm onClick={confirmHandler}/> :
+  const primaryButton = primaryButtonText ? <Button text={primaryButtonText} primary onClick={confirmHandler}/> :
     null;
 
   return (
@@ -32,6 +32,9 @@ export const Dialog = ({ isOpened, onClose, title, secondaryButtonText, primaryB
         <DialogControls>
           {primaryButton}
           <Button text={secondaryButtonText} danger onClick={onClose}/>
+          <Button text={secondaryButtonText} outlined color="green" onClick={onClose}/>
+          <Button text={secondaryButtonText} outlined color="teal" circle padding="50px 10px" onClick={onClose}/>
+
         </DialogControls>
       </DialogContainer>
     </OverlayingPopup>
