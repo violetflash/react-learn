@@ -27,7 +27,7 @@ export const fetchTodos = createAsyncThunk(
     try {
       const response = await fetch(DATA_LINK + LIMIT_QUERY);
       if (!response.ok) {
-        throw new Error('Server not responding')
+        throw new Error('Server not responding');
       }
       return await response.json();
     } catch (err) {
