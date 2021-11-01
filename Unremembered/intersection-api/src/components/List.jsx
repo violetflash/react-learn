@@ -1,11 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton'
+import { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components/macro';
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useInView } from 'react-intersection-observer';
+
+
+const Ul = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const Li = styled.li`
+  padding: 10px;
+  text-align: left;
+  margin-bottom: 4px;
+  //border: 1px solid;
+`;
+
 
 const SkeletonWrapper = ({children}) => {
   return (
     <div style={{
-      border: '1px solid black',
+      // border: '1px solid black',
       display: 'block',
       // lineHeight: 2,
       padding: 4,
@@ -17,61 +34,74 @@ const SkeletonWrapper = ({children}) => {
   )
 }
 
-export const List = (page) => {
-  const [todos, setTodos] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
-  //pagination
-  // const [page, setPage] = useState(1);
-  const limit = 20;
-  // const onScreen = useOnScreen(ref);
-  // const childRef = useRef();
 
-  // console.log(onScreen);
+export const List = props => {
+  const [data, setData] = useState([]);
+  const [limit, setLimit] = useState(20);
+  const [isLoading, setIsLoading] = useState(true);
+  // const limit = 20;
 
-  // const intersected = useScroll(parentRef, childRef, () => fetchTodos(page, limit));
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
 
   useEffect(() => {
-
-    const fetchTodos = async (page, limit) => {
-      const res = await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}&_page=${page}`);
-      const json = await res.json();
-      setTodos(prevState => [...prevState, ...json]);
-      setTodos(json);
-      // setPage(page => page + 1);
-      // setIsLoading(false);
-    };
-    // const timeoutId = setTimeout(() => fetchTodos(page, limit), 3000);
-    fetchTodos(page, limit)
-    return () => {
-      // clearTimeout(timeoutId);
+    if (inView) {
+      setLimit((limit) => {
+        return limit < 200 ? limit + 20 : 200;
+      });
     }
+  }, [inView]);
 
-  }, [page]);
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = () => {
+      fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`)
+        .then(res => res.json())
+        .then(json => {
+          setData([...json]);
+          setIsLoading(false);
+        });
+    };
+    const timeoutId = setTimeout(fetchData, 1000);
 
-  // if (!todos) return;
+    return () => clearTimeout(timeoutId);
 
-  const todosToRender = todos.map(todo => (
-    <li key={todo.id} style={{ textAlign: 'left', padding: 10, border: '1px solid black', marginBottom: 2 }}>
-      {todo.id}. {todo.title}
-    </li>
-  ));
-
-  // const darkSkeleton =
-  //   <SkeletonTheme baseColor="#202020" highlightColor="#444">
-  //     <p>
-  //       <Skeleton wrapper={SkeletonWrapper} count={10} height={30} />
-  //     </p>
-  //   </SkeletonTheme>
-  // ;
+  }, [limit]);
 
   const skeleton = <Skeleton wrapper={SkeletonWrapper} count={limit} height={30} />;
 
+
+  const todos = data.map(todo => (
+    isLoading ? skeleton : <Li key={todo.id}>{todo.id}. {todo.title}</Li>
+  ));
+
+  const prevHandle = () => setLimit((limit) => {
+    return limit > 21 ? limit - 20 : 20;
+  })
+
+  const nextHandle = () => setLimit((limit) => {
+    return limit < 200 ? limit + 20 : 200;
+  });
+
+
+  // if (inView) {
+  //   setLimit((limit) => {
+  //     return limit < 200 ? limit + 20 : 200;
+  //   });
+  // }
+
+  console.log(inView);
+
   return (
     <>
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0, }}>
-        {/*{isLoading ? skeleton : todosToRender}*/}
-        {todosToRender}
-      </ul>
+      {/*<button onClick={prevHandle}>Prev</button>*/}
+      {/*<button onClick={nextHandle}>Next</button>*/}
+      <Ul>
+        {todos}
+        <Li ref={ref}>bottom</Li>
+      </Ul>
     </>
 
   )

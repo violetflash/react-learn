@@ -26,8 +26,11 @@ export const ScaleSection = () => {
     // setPage(page => page + 1);
   }
 
+  const nextPageHandler = () => setPage(page => page + 1);
+
   return (
     <StyledScaleSection ref={ref}>
+      <button onClick={nextPageHandler}>Next page</button>
       <List page={page}/>
     </StyledScaleSection>
   );

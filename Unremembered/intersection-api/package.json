@@ -36,6 +36,8 @@
     ]
   },
   "devDependencies": {
+    "framer-motion": "^5.0.0",
+    "react-intersection-observer": "^8.32.2",
     "react-loading-skeleton": "^3.0.1",
     "styled-components": "^5.3.3"
   }

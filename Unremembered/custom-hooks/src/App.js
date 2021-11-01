@@ -2,6 +2,7 @@ import {Books, HoverElement, List} from './components';
 import { books } from './data/index';
 import {useLocalStorage, useToggle, useInput, useHover} from './hooks';
 import {useRef} from "react";
+import {ListPage} from "./pages";
 
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
         </>
         }
       </div>
-      <List/>
+      <ListPage/>
     </>
   );
 }

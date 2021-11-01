@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { ScaleSection } from "./components/ScaleSection/ScaleSection";
+import { ListSection } from "./components/";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           Learn React
         </a>
       </header>
-      <ScaleSection/>
+      <ListSection/>
     </div>
   );
 }
