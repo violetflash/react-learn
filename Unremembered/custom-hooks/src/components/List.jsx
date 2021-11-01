@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import {useScroll, useToggle} from '../hooks';
+import { useToggle, useOnScreen } from '../hooks';
 
 const SkeletonWrapper = ({children}) => {
   return (
@@ -22,32 +22,33 @@ export const List = () => {
   const [todos, setTodos] = useState([]);
   const { toggleState, toggle } = useToggle(true);
   const [isLoading, setIsLoading] = useState(true);
-
   //pagination
   const [page, setPage] = useState(1);
   const limit = 20;
-  const parentRef = useRef();
-  const childRef = useRef();
+  const ref = useRef();
+  const onScreen = useOnScreen(ref);
+  // const childRef = useRef();
 
-  const fetchTodos = async (page, limit) => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}&_page=${page}`);
-    const json = await res.json();
-    setTodos(prevState => [...prevState, ...json]);
-    setPage(page => page + 1);
-    setIsLoading(false);
-  };
+  console.log(onScreen);
 
-  const intersected = useScroll(parentRef, childRef, () => fetchTodos(page, limit));
+  // const intersected = useScroll(parentRef, childRef, () => fetchTodos(page, limit));
 
-  // useEffect(() => {
-  //
-  //   const timeoutId = setTimeout(() => fetchTodos(page, limit), 3000);
-  //
-  //   return () => {
-  //     clearTimeout(timeoutId);
-  //   }
-  //
-  // }, [page]);
+  useEffect(() => {
+
+    const fetchTodos = async (page, limit) => {
+      const res = await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}&_page=${page}`);
+      const json = await res.json();
+      setTodos(prevState => [...prevState, ...json]);
+      setPage(page => page + 1);
+      setIsLoading(false);
+    };
+    // const timeoutId = setTimeout(() => fetchTodos(page, limit), 3000);
+    fetchTodos(page, limit)
+    return () => {
+      // clearTimeout(timeoutId);
+    }
+
+  }, [page]);
 
   // if (!todos) return;
 
@@ -70,10 +71,10 @@ export const List = () => {
   return (
     <>
       <button onClick={toggle}>toggle todos</button>
-      {toggleState && <ul ref={parentRef} style={{ listStyle: 'none', padding: 0, margin: 0, }}>
+      {toggleState && <ul style={{ listStyle: 'none', padding: 0, margin: 0, }}>
         {isLoading ? skeleton : todosToRender}
       </ul>}
-      <div ref={childRef} style={{height: 20, background: 'coral'}}>
+      <div ref={ref} style={{height: 20, background: 'coral'}}>
 
       </div>
     </>
