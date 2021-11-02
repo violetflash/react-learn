@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Container, Pagination, TextField, Stack, List, ListItem, Box, Divider } from '@mui/material';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import { Container, Pagination, PaginationItem, TextField, Stack, List, ListItem, Box, Divider } from '@mui/material';
 import { BASE_URL } from "../../utils/constants";
 
 const SkeletonBox = ({children}) => {
@@ -22,10 +22,13 @@ const PaginationSkeleton = ({children}) => {
   );
 }
 
-export const PaginationSection = props => {
+
+export const PaginationSection = ({location, history}) => {
+  const initialPageState = parseInt(location.search?.split('=')[1]) || 1;
+
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState('react');
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(initialPageState);
   const [pageQty, setPageQty] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,11 +46,12 @@ export const PaginationSection = props => {
 
         if (data.nbPages < page) {
           setPage(1);
+          history.replace('/pagination');
         }
 
         setIsLoading(false);
       });
-  }, [query, page])
+  }, [query, page, history]);
 
   const pagination = pageQty > 0 ?
     <Pagination
@@ -60,6 +64,13 @@ export const PaginationSection = props => {
       showLastButton
       onChange={(_, num) => setPage(num)}
       sx={{marginY: 3, marginX: 'auto'}}
+      renderItem={(item) =>(
+        <PaginationItem
+          component={Link}
+          to={`/pagination?page=${item.page}`}
+          {...item}
+        />
+      )}
     /> : <Skeleton wrapper={PaginationSkeleton} width={500} height={37} />
   ;
 

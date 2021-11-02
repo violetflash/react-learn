@@ -1,10 +1,11 @@
 import React from 'react';
 import { PaginationSection } from "../components";
 
-export const PaginationPage = props => {
+export const PaginationPage = ({location, history}) => {
+
   return (
     <div>
-      <PaginationSection/>
+      <PaginationSection location={location} history={history} />
     </div>
   )
 };

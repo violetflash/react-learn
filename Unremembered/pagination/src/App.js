@@ -1,5 +1,5 @@
-import { Header, PaginationPage } from "./pages";
-import { Switch } from "react-router-dom";
+import { Header, PaginationPage, IntersectionPage, Home } from "./pages";
+import { Switch, Redirect, Route } from "react-router-dom";
 
 
 function App() {
@@ -7,9 +7,11 @@ function App() {
     <div className="App">
       <Header/>
       <Switch>
-
+        <Route path="/" component={Home} exact/>
+        <Route path="/pagination" component={PaginationPage}/>
+        <Route path="/intersection" component={IntersectionPage}/>
+        <Redirect to="/" component={Home} exact/>
       </Switch>
-      <PaginationPage/>
     </div>
   );
 }

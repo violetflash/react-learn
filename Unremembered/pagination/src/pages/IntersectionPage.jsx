@@ -1,13 +1,13 @@
 import React from 'react';
 import { Container } from "@mui/material";
 
-export const Home = props => {
+export const IntersectionPage = () => {
   return (
     <Container
       sx={{marginTop: '30px'}}
       maxWidth='xl'
     >
-      Подробное описание тут видишь ты
+      Видишь здесь ты лист, с добавлением итемов по скролу
     </Container>
-  )
+  );
 };
